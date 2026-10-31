@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Middle Powers Evaluation Pact</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #0d7377;
+      --teal-dark: #095c5f;
+      --dark-bg: #1a1a2e;
+      --light-gray: #f5f5f5;
+      --mid-gray: #e8e8e8;
+      --text: #1a1a1a;
+      --text-secondary: #555;
+      --white: #ffffff;
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Navigation ───────────────────────────────── */
+    nav {
+      background: var(--dark-bg);
+      color: var(--white);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      font-size: 14px;
+    }
+
+    nav .nav-links a {
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    nav .nav-links a:hover { opacity: 1; }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .hero {
+      padding: 72px 0 64px;
+    }
+
+    .hero .label {
+      display: inline-block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.1;
+      max-width: 700px;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero .subtitle {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 620px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .hero .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 24px;
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--teal-dark); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 24px;
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--text);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--text);
+      color: var(--white);
+    }
+
+    /* ── Section Shared ───────────────────────────── */
+    section { padding: 64px 0; }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+
+    /* ── The Problem ──────────────────────────────── */
+    .problem {
+      border-top: 1px solid var(--mid-gray);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 16px;
+    }
+
+    .problem-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .problem-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── How the Pact Works ───────────────────────── */
+    .how-it-works {
+      border-top: 1px solid var(--mid-gray);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .step .step-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .step h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Evaluation Registry ──────────────────────── */
+    .registry {
+      background: var(--dark-bg);
+      color: var(--white);
+      padding: 64px 0;
+    }
+
+    .registry .section-title { color: var(--white); }
+
+    .registry .section-subtitle {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .registry-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .registry-table thead th {
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .registry-table tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-badge.in-progress {
+      background: rgba(255, 193, 7, 0.2);
+      color: #ffc107;
+    }
+
+    .status-badge.published {
+      background: rgba(76, 175, 80, 0.2);
+      color: #66bb6a;
+    }
+
+    .status-badge.none {
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── Proposed Founding Members ────────────────── */
+    .members {
+      border-top: 1px solid var(--mid-gray);
+    }
+
+    .members-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .member-tag {
+      display: inline-block;
+      padding: 8px 20px;
+      border: 1.5px solid #ccc;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .member-tag:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    /* ── Hard Questions ───────────────────────────── */
+    .faq {
+      background: var(--light-gray);
+      padding: 64px 0;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .faq-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .faq-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .faq-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .faq-grid .faq-card:last-child {
+      grid-column: 1;
+    }
+
+    /* ── CTA / Final Section ──────────────────────── */
+    .cta-section {
+      padding: 72px 0 48px;
+      border-top: 1px solid var(--mid-gray);
+    }
+
+    .cta-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      max-width: 600px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .cta-section > .container > p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 680px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .cta-section .btn-primary {
+      margin-bottom: 48px;
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer {
+      padding: 24px 0;
+      border-top: 1px solid var(--mid-gray);
+    }
+
+    footer p {
+      font-size: 11px;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    /* ── Responsive ───────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+
+      .problem-grid,
+      .faq-grid { grid-template-columns: 1fr; }
+
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+
+      nav .nav-links { display: none; }
+
+      .faq-grid .faq-card:last-child { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Navigation ═══ -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">Middle Powers Evaluation Pact</div>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#registry">Registry</a></li>
+        <li><a href="#members">Members</a></li>
+        <li><a href="#faq">FAQs</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══ Hero ═══ -->
+  <section class="hero">
+    <div class="container">
+      <span class="label">A Mutual Gain Proposal · Middle Powers Innovation 2026</span>
+      <h1>No single middle power can test frontier AI alone. Together, they can.</h1>
+      <p class="subtitle">A pact among four to six countries to pool resources for independent, third-party evaluation of frontier models, with a shared registry that ensures who funded a test, and what was disclosed.</p>
+      <div class="btn-group">
+        <a href="#" class="btn-primary">Convene a pilot →</a>
+        <a href="#how-it-works" class="btn-outline">See the mechanism</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ The Problem ═══ -->
+  <section class="problem">
+    <div class="container">
+      <h2 class="section-title">The problem</h2>
+      <p class="section-subtitle">Frontier AI models are expensive, and the labs that build the models decide who tests them. Middle powers are still choosing between building costly national bodies or relying on someone else's results.</p>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <h3>Too costly alone</h3>
+          <p>A national eval lab can cost tens of millions yearly. Compute, talent, and red-team access all carry costs that scale rapidly, and few countries can sustain them alone.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Too dependent on two blocs</h3>
+          <p>Relying on US or UK-led AI safety institutes means trusting a potentially biased party. Third-party autonomy erodes as geopolitical pressures shift.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Too little leverage</h3>
+          <p>On their own, mid-sized economies lack bargaining power vis-à-vis concentrated labs or superpowers. Collective voice gets results, fragmented voices don't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ How the Pact Works ═══ -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How the pact works</h2>
+
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3>Pool the cost</h3>
+          <p>Member states set the evaluation agenda and contribute proportional funding. A lean secretariat manages contracts, logistics, and the shared cost envelope.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3>Condition market access</h3>
+          <p>Using a single agreement, members require frontier providers to submit models for evaluation before their models can reach local markets. Coordination makes compliance more practical.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3>Test, then disclose</h3>
+          <p>Independent evaluators run agreed test suites—safety, bias, factual accuracy, resilience—at a timeline tied to model release. Members set the terms, not labs.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">04</div>
+          <h3>Publish the registry</h3>
+          <p>A shared registry records every evaluation result, its methodology, the source of funding, its reproducibility status, and the evaluators. Transparency drives accountability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Evaluation Registry ═══ -->
+  <section class="registry" id="registry">
+    <div class="container">
+      <h2 class="section-title">The evaluation registry</h2>
+      <p class="section-subtitle">One pact, a series of evaluations, submitted results, what was asked, and what was shared. The table below uses illustrative placeholder data.</p>
+
+      <table class="registry-table">
+        <thead>
+          <tr>
+            <th>Lab</th>
+            <th>Model</th>
+            <th>Tests(s)</th>
+            <th>Reconfirmed</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lab A</td>
+            <td>Model 1</td>
+            <td>Multi V</td>
+            <td>All members</td>
+            <td><span class="status-badge in-progress">In progress</span></td>
+          </tr>
+          <tr>
+            <td>Lab B</td>
+            <td>Model 2</td>
+            <td>Multi V</td>
+            <td>Partial</td>
+            <td><span class="status-badge published">Published</span></td>
+          </tr>
+          <tr>
+            <td>Lab C</td>
+            <td>Model 3</td>
+            <td>Full (β)</td>
+            <td>None</td>
+            <td><span class="status-badge none">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ Proposed Founding Members ═══ -->
+  <section class="members" id="members">
+    <div class="container">
+      <h2 class="section-title">Proposed founding members</h2>
+      <p class="section-subtitle">Candidates for a first pact. None have endorsed this proposal.</p>
+
+      <div class="members-tags">
+        <span class="member-tag">Canada</span>
+        <span class="member-tag">Japan</span>
+        <span class="member-tag">Australia</span>
+        <span class="member-tag">South Korea</span>
+        <span class="member-tag">Norway</span>
+        <span class="member-tag">Brazil</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Hard Questions ═══ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <h2 class="section-title">Hard questions, direct answers</h2>
+
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h3>Why would a lab cooperate?</h3>
+          <p>A credible, multilateral evaluation framework offers labs a single compliance pathway across multiple markets. It replaces fragmented, country-by-country audits with one trusted process.</p>
+        </div>
+        <div class="faq-card">
+          <h3>Why not rely on the US or UK institutions?</h3>
+          <p>Independence matters. The safety institutes in these countries serve national policy interests. A multilateral pact gives middle powers control over the scope, pace, and priorities of testing.</p>
+        </div>
+        <div class="faq-card">
+          <h3>What about free-riding?</h3>
+          <p>The pact is structured so that participation is tied to benefit. Non-contributing countries don't receive full results. Member status carries both cost obligations and access rights.</p>
+        </div>
+        <div class="faq-card">
+          <h3>What the major power objection?</h3>
+          <p>If successful, the pact is another venue for testing that does not displace other evaluations. Laps are already at liberty to pursue independent testing arrangements. A pact formalises something already starting to happen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA / Final Section ═══ -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>The first step is one convening, not a treaty.</h2>
+      <p>One country invites three others to a table to draft a mutual recognition framework — a CONVENING, not a CONVENTION. Agree on the test suites, the cost splits, and the registry. Then, test the idea.</p>
+      <a href="#" class="btn-primary">Propose a pilot: CONTACT PAGE →</a>
+    </div>
+  </section>
+
+  <!-- ═══ Footer ═══ -->
+  <footer>
+    <div class="container">
+      <p>A discussion draft prepared for an informal expert consultation, v.2. Updated 15 September 2026. Feedback welcome via contact page. This document and associated materials are licensed under CC BY 4.0.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
